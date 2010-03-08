@@ -1,12 +1,15 @@
 set :application, "Sapling"
-set :repository,  "set your repository location here"
+set :repository,  "git@github.com:ericcf/Sapling.git"
 
 set :scm, :git
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
 role :web, "10.101.8.76"                          # Your HTTP server, Apache/etc
 role :app, "10.101.8.76"                          # This may be the same as your `Web` server
-role :db,  "10.101.8.76", :primary => true # This is where Rails migrations will run
+role :db,  "10.101.8.76", :primary => true        # This is where Rails migrations will run
+
+ssh_options[:forward_agent] = true
+
+set :branch, "master"
 
 # If you are using Passenger mod_rails uncomment this:
 # if you're still using the script/reapear helper you will need
