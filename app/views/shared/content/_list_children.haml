@@ -1,0 +1,7 @@
+%table
+  - for child in @content.children
+    %tr{ :class => cycle('even', 'odd') }
+      %td.title
+        = internal_link_to(child)
+      %td.date
+        = render_date child.updated_at

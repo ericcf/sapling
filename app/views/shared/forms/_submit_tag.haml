@@ -1,0 +1,4 @@
+%div.submit_tag
+  = tag
+  - unless cancel_value.nil?
+    = render(:partial => 'shared/forms/submit_cancel', :locals => { :cancel_label => cancel_value, :cancel_url => cancel_url })

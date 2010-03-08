@@ -1,0 +1,15 @@
+- @javascripts << 'jquery/jquery-1.4.1.min.js'
+- @javascripts << 'menu_helpers.js'
+
+- content_for :action_menu do
+  %ul.horizontal_menu
+    - if current_user.is_authorized?(controller_name, 'new') != false
+      %li<
+        %a{ :href => "#" }> Add New...
+        %ul
+          - for type in content_types do
+            %li<
+              = link_to type, "#{@action_url}/NEW?new_type=#{type}", :class => 'action'
+    - for item in action_items
+      %li<
+        = item

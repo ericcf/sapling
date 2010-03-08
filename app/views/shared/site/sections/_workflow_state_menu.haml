@@ -1,0 +1,15 @@
+- @javascripts << 'jquery/jquery-1.4.1.min.js'
+- @javascripts << 'menu_helpers.js'
+
+- content_for :workflow_state_menu do
+  - if current_user.is_authorized?('workflow', 'update_state')
+    - if @content and @content.workflow_state
+      %ul.horizontal_menu
+        - current_state = @content.workflow_state.name
+        %li
+          %div{ :class => current_state }= current_state
+          %ul
+            - for state in workflow_state_list
+              - unless state == current_state
+                %li
+                  = link_to state, { :action => 'update_state', :controller => 'admin/workflow', :content_id => @content.id, :content_type => @content.class.to_s, :workflow_state => state }, { :method => :put, :class => 'action' }

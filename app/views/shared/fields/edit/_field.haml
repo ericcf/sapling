@@ -1,0 +1,5 @@
+%div.field
+  = render(:partial => 'shared/fields/edit/field_label', :locals => { :form => form, :label => label })
+  = field
+  = render(:partial => 'shared/fields/edit/field_required', :locals => { :required => required })
+  = render(:partial => 'shared/fields/edit/field_error', :locals => { :form => form, :field_name => field_name })

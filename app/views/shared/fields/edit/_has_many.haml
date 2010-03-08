@@ -1,0 +1,6 @@
+- children = @content.send(field_name)
+%div{ :id => field_name }
+  = render :partial => 'shared/forms/sub_content', :collection => children, :locals => { :form => form }
+
+%p
+  = add_content_link "Add a #{schema_field.child_classname}", "##{field_name}", eval(schema_field.child_classname)

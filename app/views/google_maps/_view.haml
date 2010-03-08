@@ -1,0 +1,54 @@
+- @javascripts << "jquery/jquery-1.4.1.min.js"
+%script{ :src => "http://maps.google.com/maps/api/js?sensor=false", :type => "text/javascript" }
+
+- map_center = [@content.center_lat,@content.center_lon]
+- zoom_level = @content.zoom_level
+- map_type = @content.map_type
+- addresses = ["676 n st clair chicago il", "200 e ontario chicago il"]
+
+%h1= @content.title
+
+:javascript
+  var map;
+  var geocoder;
+  var infowindow = new google.maps.InfoWindow({ content: "" });
+
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(#{map_center.join(",")});
+    var myOptions = {
+      zoom: #{zoom_level},
+      center: latlng,
+      mapTypeId: #{map_type}
+    }
+    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    var addresses = [#{addresses.map { |addr| "\"#{addr}\"" }.join(",")}];
+    var addr;
+    for (i in addresses) {
+      showAddress(addresses[i]);
+    }
+  }
+  function showAddress(address) {
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        //map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location,
+          title: address
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(address);
+          infowindow.open(map,marker);
+        });
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }
+
+  jQuery(document).ready(function() {
+    initialize();
+  });
+
+%div#map_canvas{ :style => 'width: 500px; height: 300px' }

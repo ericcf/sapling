@@ -1,0 +1,30 @@
+- @javascripts ||= []
+- @stylesheets ||= []
+
+= draw 'logo'
+
+= draw 'search'
+
+= draw 'breadcrumbs'
+
+= draw 'action_menu'
+
+= draw 'workflow_state_menu'
+
+= draw 'tag_menu'
+
+= draw 'personal'
+
+- cache(:action => 'delegate', :action_suffix => 'show') do
+  = draw 'main_menu'
+
+  = draw 'sidebar'
+
+  = draw 'above_content'
+
+  = render :partial => @content_partial
+
+  = draw 'footer'
+
+-# important that this go last, so that required js/css are included
+= draw 'header'

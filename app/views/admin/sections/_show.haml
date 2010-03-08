@@ -1,0 +1,11 @@
+%h2= "Section #{@section.name}"
+
+%ul
+  - for chunk in @section.chunks do
+    %li
+      = link_to chunk.name, admin_section_chunk_path(@section, chunk)
+      = link_to 'Edit', edit_admin_section_chunk_path(@section, chunk)
+
+%p= link_to 'Add Chunk', new_admin_section_chunk_path(@section)
+
+%p= link_to 'Back to Sections', admin_sections_path

@@ -1,0 +1,66 @@
+.horizontal_menu
+  float: right
+  a
+    color: #ffffff
+    background-color: #0000aa
+    font-weight: bold
+    padding-left: 0.5em
+    display: block
+    text-decoration: none
+    border-right: 1px solid #ffffff
+    &:hover
+      cursor: default
+    &.action
+      &:hover
+        background-color: #aaaaaa
+        cursor: pointer
+    &.destructive
+      color: #cc0000
+      border: none
+      background-color: #ffcccc
+      &:hover
+        background-color: #ffaaaa
+        cursor: pointer
+  li
+    float: left
+    width: 8em
+    margin: 0
+    ul
+      position: absolute
+      width: 8em
+      left: -999em
+    &:hover ul, &.sfhover ul
+      left: auto
+      a
+        border-top: none
+      li
+        width: 18em
+
+#workflow_state_menu
+  float: left
+  margin-left: 20px
+  background-color: #ffffff
+  font-weight: bold
+  //width: 8em
+  div
+    padding: 0 0.5em
+    cursor: default
+  .public
+    color: #0000aa
+  .private
+    color: #cc0000
+
+#tag_menu
+  //width: 8em
+  float: left
+  margin-left: 20px
+  background-color: #ffffff
+  font-weight: bold
+  form
+    margin-top: 0
+  div
+    padding: 0 0.5em
+    cursor: default
+  li.tag
+    background-color: #0000aa
+    color: #ffffff

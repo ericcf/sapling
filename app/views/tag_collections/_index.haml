@@ -1,0 +1,6 @@
+= link_to 'Add new Tag Collection', new_tag_collection_path
+
+- for collection in @tag_collections
+  %div
+    = link_to collection.label, collection
+    %div= collection.description

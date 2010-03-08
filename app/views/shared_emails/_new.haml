@@ -1,0 +1,5 @@
+- form_for @shared_email, :url => @action_url do |form|
+  = form.text_field :recipient, :label => 'Recipient\'s Email Address'
+  = form.text_field :sender, :label => 'Your Email Address'
+  = form.text_field :comments
+  = form.submit :cancel_url => @content.path

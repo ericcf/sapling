@@ -1,0 +1,5 @@
+- multipart = @content.schema_fields.any? { |field| field.is_file_field? }
+- form_for @content, :url => @action_url, :html => { :method => f_method, :multipart => multipart } do |form|
+  = hidden_field_tag 'new_type', @content.class.to_s
+  = render :partial => 'shared/content/fields', :locals => { :content => @content, :form => form }
+  = submit_tag 'Submit', :cancel_value => 'Cancel', :cancel_url => @action_url

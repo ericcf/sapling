@@ -1,0 +1,9 @@
+- @javascripts << 'jquery/jquery-1.4.1.min.js'
+:javascript
+  $(document).ready(function() {
+    $('#user_username').focus();
+  });
+- form_for @user, :url => { :controller => :users, :action => :login } do |form|
+  = form.text_field :username
+  = form.password_field :password
+  = form.submit 'Log In', :cancel_url => root_url

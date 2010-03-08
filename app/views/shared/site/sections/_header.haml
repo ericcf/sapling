@@ -1,0 +1,10 @@
+- content_for :head do
+  %title= title
+  = stylesheet_link_tag 'screen', :media => 'screen'
+  - @stylesheets ||= []
+  - for stylesheet in @stylesheets.uniq
+    = stylesheet_link_tag stylesheet
+  - @javascripts ||= @javascripts
+  - for javascript in @javascripts.uniq
+    = javascript_include_tag javascript
+  = auto_discovery_link_tag :rss, '/@news_feed.xml'

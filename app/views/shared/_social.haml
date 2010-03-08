@@ -1,0 +1,10 @@
+- require 'cgi'
+- eurl = CGI.escape(url)
+- etitle = CGI.escape(title)
+%p.sharing
+  share:
+  %br
+  = render :partial => 'shared/social/email'
+  = render :partial => 'shared/social/facebook', :locals => { :title => title, :etitle => etitle, :eurl => eurl }
+  = render :partial => 'shared/social/digg', :locals => { :title => title, :etitle => etitle, :eurl => eurl }
+  = render :partial => 'shared/social/buzz', :locals => { :title => title, :etitle => etitle, :eurl => eurl }

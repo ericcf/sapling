@@ -1,0 +1,5 @@
+- form_for @user, :url => @action_url do |form|
+  = form.text_field :username
+  = form.password_field :password
+  = form.password_field :password_confirmation, :label => 'Confirm Password'
+  = submit_tag 'Submit', :cancel_value => 'Cancel', :cancel_url => admin_users_path

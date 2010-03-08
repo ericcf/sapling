@@ -1,0 +1,4 @@
+%li
+  = tag_render.label
+  - unless tag_render.children.empty?
+    %ul= render :partial => 'tag_render', :collection => tag_render.children

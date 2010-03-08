@@ -1,0 +1,25 @@
+- @javascripts ||= []
+- @stylesheets ||= []
+
+= draw 'logo'
+
+//= draw 'search'
+
+//= draw 'breadcrumbs'
+
+= draw 'personal'
+
+//= draw 'main_menu'
+
+= draw 'sidebar'
+
+//= draw 'action_menu'
+
+= draw 'above_content'
+
+= render :partial => partial
+
+= draw 'footer'
+
+-# important that this go last, so that required js/css are included
+= draw 'header'

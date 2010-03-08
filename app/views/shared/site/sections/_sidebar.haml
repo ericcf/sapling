@@ -1,0 +1,5 @@
+- content_for :sidebar do
+  %ul
+    - for item in sidebar_items do
+      %li
+        = render :partial => 'shared/site/sections/reference', :locals => { :reference => item }

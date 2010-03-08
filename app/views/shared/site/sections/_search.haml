@@ -1,0 +1,5 @@
+- content_for :search do
+  - form_tag do
+    %div
+      = text_field_tag 'q'
+      = submit_tag 'Search', :class => 'search_submit'

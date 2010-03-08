@@ -1,0 +1,16 @@
+Filter by type:
+%ul
+  - for type in content_types do
+    %li
+      %a{ :href => '#' }= type
+
+%table
+  %tr
+    %th Content
+  - for node in @node_list do
+    %tr
+      %td
+        %a{ :href => node.path, :class => 'content_reference' }= node.content.title
+
+%hr
+= will_paginate @node_list

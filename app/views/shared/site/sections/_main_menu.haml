@@ -1,0 +1,5 @@
+- content_for :main_menu do
+  %ul
+    - for item in menu_items do
+      %li
+        = render :partial => 'shared/site/sections/reference', :locals => { :reference => item }

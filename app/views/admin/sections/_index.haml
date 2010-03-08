@@ -1,0 +1,11 @@
+%h2 Editing Page Sections
+
+%ul
+  - for section in @sections do
+    %li
+      = link_to section.name, admin_section_path(section)
+      = link_to 'Edit', edit_admin_section_path(section)
+
+%p= link_to 'Add Section', new_admin_section_path
+
+%p= link_to 'Back to Site Admin', '/@admin'

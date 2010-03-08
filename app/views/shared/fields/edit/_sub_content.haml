@@ -1,0 +1,10 @@
+- sub_content_type = sub_content.class.to_s.underscore
+%div{ :class => sub_content_type }
+  - parent_type = @content.class.to_s.underscore
+  - new_or_existing = sub_content.new_record? ? 'new' : 'existing'
+  - prefix = "#{parent_type}[#{new_or_existing}_#{sub_content_type}_attributes][]"
+  - fields_for prefix, sub_content do |sub_content_form|
+    %p
+      = "#{sub_content.class.to_s}:"
+      = render :partial => 'shared/content/fields', :locals => { :content => sub_content, :form => sub_content_form }
+      = link_to_function 'remove', 'jQuery(this).parent().remove()'

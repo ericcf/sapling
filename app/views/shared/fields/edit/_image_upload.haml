@@ -1,0 +1,10 @@
+%div.value
+  - if form.object.send("#{field_name}_file_size")
+    = image_tag form.object.send(field_name).url(:thumb)
+    = check_box_tag "#{form.object_name}[#{field_name}_delete]"
+    Delete current image
+    %br
+    %br
+    Replace image:
+    %br
+  = file_field_tag "#{form.object_name}[#{field_name}]"

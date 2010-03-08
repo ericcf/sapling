@@ -1,0 +1,6 @@
+- form_for @chunk, :url => @action_url do |form|
+  %div.field
+    - @content = @chunk
+    = form.text_field :name
+    = form.rich_text_area :text, :label => 'Body'
+    = form.submit :cancel_url => admin_section_path(@section)

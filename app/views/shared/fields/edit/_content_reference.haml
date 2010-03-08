@@ -1,0 +1,14 @@
+-#%div.content_reference
+-#  %table
+-#    %tr
+-#      %th Content
+-#    - for node in @node_list do
+-#      %tr
+-#        %td
+-#          %a{ :href => node.path, :class => 'content_reference' }= node.content.title
+-#
+-#  %hr
+-#  = will_paginate @node_list
+
+= form.text_field "#{field_name}_id".to_sym
+= form.text_field "#{field_name}_type".to_sym

@@ -1,0 +1,3 @@
+- content_for :breadcrumbs do
+  you are here:
+  = render :partial => 'shared/site/sections/reference', :collection => breadcrumbs(@content), :spacer_template => 'shared/site/sections/crumb_spacer'

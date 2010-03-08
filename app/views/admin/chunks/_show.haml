@@ -1,0 +1,5 @@
+%h2= "Chunk #{@chunk.name} from Section #{@section.name}"
+
+= @chunk.text
+
+%p= link_to "Back to #{@section.name}", admin_section_path(@section)

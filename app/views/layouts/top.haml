@@ -1,0 +1,27 @@
+%html
+  %head= yield :head
+  
+  %body
+    %div#admin
+      %div#action_menu= yield :action_menu
+      %div#workflow_state_menu= yield :workflow_state_menu
+      %div#tag_menu= yield :tag_menu
+      %div#personal= yield :personal
+
+    %h1#logo= yield :logo
+
+    %div#search= yield :search
+
+    %div#breadcrumbs= yield :breadcrumbs
+
+    %div#main_menu= yield :main_menu
+
+    %div#sidebar= yield :sidebar
+
+    %div#above_content= yield :above_content
+
+    %div#content= yield :layout
+
+    %div#below_content= yield :below_content
+
+    %div#footer= yield :footer

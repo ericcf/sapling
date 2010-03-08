@@ -1,0 +1,23 @@
+- @javascripts ||= []
+- @stylesheets ||= []
+
+= draw 'logo'
+
+-#= draw 'search'
+
+= draw 'personal'
+
+= draw 'main_menu'
+
+= draw 'sidebar'
+
+= draw 'above_content'
+
+%h2= f_method == :post ? "Adding New #{@content.class}" : "Editing #{@content.class}"
+
+= render :partial => 'shared/content/edit', :locals => { :f_method => f_method }
+
+= draw 'footer'
+
+-# important that this go last, so that required js/css are included
+= draw 'header'

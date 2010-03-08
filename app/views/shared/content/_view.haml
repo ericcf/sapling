@@ -1,0 +1,7 @@
+- @content.page_sections.each do |section, view|
+  - content_for section do
+    = render view[:partial]
+
+%span{ :class => @content.class.to_s.underscore }
+  - @content.schema_fields.each do |field|
+    = render partial_for(@content, field)

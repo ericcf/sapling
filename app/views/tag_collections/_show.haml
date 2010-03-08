@@ -1,0 +1,7 @@
+- @stylesheets << 'screen_tag_collections.css'
+
+%h2= @tag_collection.label
+%p= @tag_collection.description
+
+- unless @tag_collection.top_level_tags.empty?
+  %ul.tag_collection= render :partial => 'tag_render', :collection => @tag_collection.top_level_tags

@@ -1,0 +1,8 @@
+- tags = @content.tags
+- if tags and tags.size > 0
+  %p
+    Categories:
+    = render :partial => 'shared/tags/list', :locals => { :tags => tags }
+
+- url = File.join(root_url, @content.path)
+= render :partial => 'shared/social', :locals => { :title => @content.title, :url => url }

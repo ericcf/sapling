@@ -1,0 +1,49 @@
+<head>
+  <script src="../javascripts/jquery/jquery-1.4.1.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("a").click(function(event){
+        $(this).parent().parent().parent().removeClass("selected");
+        $(this).blur().parent().addClass("selected").next().addClass("selected").slideDown();
+      });
+    });
+  </script>
+</head>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+li div {
+  width: 10em;
+}
+li ul {
+  position: absolute;
+  left: 10em;
+  top: 0;
+}
+#treeview {
+  position: relative;
+}
+.selected {
+  background-color: beige;
+}
+</style>
+
+<ul id="treeview">
+  <li><div><a href="#">Level 1a</a> -></div>
+    <ul style="display:none;">
+      <li><div><a href="#">Level 2a</a> -></div>
+        <ul style="display:none;">
+          <li><div><a href="#">Level 3a</a></div></li>
+        </ul>
+      </li>
+      <li><a href="#">Level 2b</a></li>
+    </ul>
+  </li>
+  <li><a href="#">Level 1b</a></li>
+</ul>

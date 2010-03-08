@@ -1,0 +1,2 @@
+class DateWorkflowTrigger < WorkflowTrigger
+end

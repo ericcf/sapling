@@ -1,0 +1,26 @@
+- @javascripts << 'jquery/jquery-1.4.1.min.js'
+- @javascripts << 'menu_helpers.js'
+
+- content_for :tag_menu do
+  - if @content and current_user.is_authorized?('nodes', 'update', @content.workflow_state.name)
+    :javascript
+      jQuery(document).ready(function() {
+        jQuery("li.tag input[type='checkbox']").click(function() {
+          var checkbox = jQuery(this);
+          if (checkbox.is(':checked'))
+            jQuery.ajax({ url: '#{url_for(:controller => :tags, :action => :create_association)}', data: {'tag_association[tag_id]': checkbox.val(), 'tag_association[content_id]': #{@content.id}, 'tag_association[content_type]': '#{@content.class}'}, type: 'POST' });
+          else
+            jQuery.ajax({ url: '#{url_for(:controller => :tags, :action => :destroy_association)}', data: {'tag_association[tag_id]': checkbox.val(), 'tag_association[content_id]': #{@content.id}, 'tag_association[content_type]': '#{@content.class}'}, type: 'POST' });
+        });
+      });
+    - cache(:action => 'delegate', :action_suffix => 'tag_menu_form') do
+      - content_tags = @content.tags
+      - form_tag do
+        %ul.horizontal_menu
+          %li
+            %div tags
+            %ul
+              - for tag in Tag.all
+                %li.tag
+                  = check_box_tag "tag_#{tag.id}", tag.id, content_tags.include?(tag)
+                  = tag.label

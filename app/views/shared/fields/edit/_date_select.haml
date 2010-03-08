@@ -1,0 +1,9 @@
+- @javascripts << 'jquery/jquery-1.4.1.min.js'
+- @javascripts << 'jquery/jquery-ui-1.7.2.custom.min.js'
+- @stylesheets << 'jquery/ui-lightness/jquery-ui-1.7.2.custom.css'
+- field_id = "#{form.object_name}_#{field_name}"
+:javascript
+  jQuery(document).ready(function() {
+    jQuery("##{field_id}").datepicker({ dateFormat: 'yy-mm-dd', showOptions: { direction: 'up' } });
+  });
+= form.text_field field_name, :decorated => false

@@ -1,0 +1,29 @@
+- @javascripts = ['jquery/jquery-1.4.1.min.js']
+- @stylesheets = ['screen_tag_collections.css']
+
+= draw 'logo'
+
+= draw 'search'
+
+= draw 'personal'
+
+= draw 'main_menu'
+
+= draw 'sidebar'
+
+= draw 'above_content'
+
+%h2 Editing Tag Collection
+= error_messages_for :tag_collection
+- form_for :tag_collection, :url => { :action => action }, :html => { :method => f_method } do |form|
+  = form.text_field :label
+  %div#tags= render :partial => 'tag' , :collection => @tag_collection.top_level_tags
+  //%p= add_tag_link 'New tag', :tags
+  %p= link_to_function "Add tag", "jQuery('#tags').append('#{escape_javascript render(:partial => 'tag', :object => Tag.new)}')"
+  %br
+  = form.submit 'Submit'
+
+= draw 'footer'
+
+-# important that this go last, so that required js/css are included
+= draw 'header'

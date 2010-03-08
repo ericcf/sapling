@@ -1,0 +1,15 @@
+%div.tag
+  - new_or_existing = tag.new_record? ? 'new' : 'existing'
+  - prefix = "tag_collection[#{new_or_existing}_tag_attributes][]"
+  - fields_for prefix, tag do |tag_form|
+    %div{ :id => "tag_#{tag.id}" }
+      = tag_form.hidden_field :parent_id, :value => tag.parent_id
+      = tag_form.text_field :label, :label => 'Tag'
+      = link_to_function "remove" , "$(this).parent().parent('.tag').remove()"
+      = tag.label
+    - unless tag.new_record?
+      = render :partial => 'tag', :collection => tag.children
+      //%p= add_tag_link "Add #{tag.label} sub-tag", "tag_#{tag.id}", tag.id
+      %p
+        = link_to_function "Add sub-tag", "$('#tags').append('#{escape_javascript render(:partial => 'tag', :object => Tag.new(:parent_id => tag.id))}')"
+        = "to #{tag.label}"
