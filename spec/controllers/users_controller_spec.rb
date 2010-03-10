@@ -22,9 +22,9 @@ describe UsersController do
       assigns[:action_url].should == root_url
     end
 
-    it 'renders the site_page_view template' do
+    it 'renders the minimal_view template' do
       get :login_form
-      response.should render_template('shared/site/site_page_view')
+      response.should render_template('shared/site/minimal_view')
     end
   end
 

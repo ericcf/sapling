@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     @user = User.new
     @content_partial = 'users/login_form'
     @action_url = root_url
-    render :template => 'shared/site/site_page_view'
+    render :template => 'shared/site/minimal_view'
   end
 
   def login

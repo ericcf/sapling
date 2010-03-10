@@ -68,10 +68,18 @@ ActionController::Routing::Routes.draw do |map|
   # nodes
   map.connect '/@node_list', :controller => 'nodes', :action => 'node_list'
   map.root :controller => 'nodes', :action => 'welcome', :conditions => { :method => :get }
+  map.connect '@new/*node_path',
+    :conditions => { :method => :get },
+    :controller => 'nodes',
+    :action => 'new'
+  map.connect '@edit/*node_path',
+    :conditions => { :method => :get },
+    :controller => 'nodes',
+    :action => 'edit'
   map.connect '*node_path',
     :conditions => { :method => :get },
     :controller => 'nodes',
-    :action => 'delegate'
+    :action => 'show'
   map.connect '*node_path',
     :conditions => { :method => :post },
     :controller => 'nodes',

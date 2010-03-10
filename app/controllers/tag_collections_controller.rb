@@ -24,7 +24,7 @@ class TagCollectionsController < ApplicationController
     @tag_collection = TagCollection.new(params[:tag_collection])
 
     if @tag_collection.save
-      expire_fragment(:controller => :nodes, :action => 'delegate', :action_suffix => 'tag_menu_form')
+      expire_fragment(:controller => :nodes, :action => 'show', :part => 'tag_menu_form')
       flash[:notice] = 'TagCollection was successfully created.'
       redirect_to @tag_collection
     else
@@ -41,7 +41,7 @@ class TagCollectionsController < ApplicationController
     @tag_collection = TagCollection.find(params[:id])
 
     if @tag_collection.update_attributes(params[:tag_collection])
-      expire_fragment(:controller => :nodes, :action => 'delegate', :action_suffix => 'tag_menu_form')
+      expire_fragment(:controller => :nodes, :action => 'show', :part => 'tag_menu_form')
       flash[:notice] = 'TagCollection was successfully updated.'
       redirect_to @tag_collection
     else
@@ -53,7 +53,7 @@ class TagCollectionsController < ApplicationController
     @tag_collection = TagCollection.find(params[:id])
 
     if @tag_collection.destroy
-      expire_fragment(:controller => :nodes, :action => 'delegate', :action_suffix => 'tag_menu_form')
+      expire_fragment(:controller => :nodes, :action => 'show', :part => 'tag_menu_form')
       flash[:notice] = 'TagCollection was successfully removed.'
       redirect_to :action => :index
     else

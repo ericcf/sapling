@@ -15,15 +15,30 @@ describe NodesController do
     @controller.stub!(:check_authorization).and_return(true)
   end
 
-  it 'should route node paths correctly' do
-    route_for(:controller => 'nodes',
-      :action => 'delegate',
-      :node_path => ['a', 'b', 'c']).should == '/a/b/c'
+  context 'routing' do
+
+    it 'should route node paths correctly' do
+      route_for(:controller => 'nodes',
+        :action => 'show',
+        :node_path => ['a', 'b', 'c']).should == '/a/b/c'
+    end
+
+    it 'should route the new action correctly' do
+      route_for(:controller => 'nodes',
+        :action => 'new',
+        :node_path => []).should == '/@new'
+    end
+
+    it 'should route the edit action correctly' do
+      route_for(:controller => 'nodes',
+        :action => 'edit',
+        :node_path => []).should == '/@edit'
+    end
   end
 
-  context 'GET welcome' do
+  context 'GET root' do
 
-    context 'when a root item exists' do
+    context 'when root item exists' do
 
       it 'assigns @content_partial to shared/content/view' do
         root_node = mock_model(Node).as_null_object
@@ -35,7 +50,7 @@ describe NodesController do
       end
     end
 
-    context 'when no root item exists' do
+    context 'when root item does not exist' do
 
       it 'should assign @content_partial to _welcome' do
         Node.stub!(:find_by_path).with('/').and_return(nil)
@@ -45,63 +60,63 @@ describe NodesController do
     end
   end
 
-  context 'GET delegate' do
+  context 'GET show' do
 
     it 'assigns @action_url to context node path' do
-      @node.stub!(:path).and_return('/foo')
-      get :delegate, :node_path => ['foo']
-      assigns[:action_url].should == '/foo'
+      get :show, :node_path => ['foo']
+      assigns[:action_url].should == @node.path
     end
 
-    context 'no action' do
-
-      it 'searches for the node matching the path' do
-        Node.should_receive(:find_by_path).with('/foo/bar').and_return(@node)
-        get :delegate, :node_path => ['foo', 'bar']
-      end
-
-      it 'assigns @content_partial to shared/content/view' do
-        get :delegate, :node_path => ['foo']
-        assigns[:content_partial].should == 'shared/content/view'
-      end
+    it 'searches for the node matching the path' do
+      Node.should_receive(:find_by_path).with('/foo/bar').and_return(@node)
+      get :show, :node_path => ['foo', 'bar']
     end
 
-    context 'NEW action' do
+    it 'assigns @content_partial to shared/content/view' do
+      get :show, :node_path => ['foo']
+      assigns[:content_partial].should == 'shared/content/view'
+    end
+  end
 
-      before(:each) do
-        @new_content = mock('content')
-      end
+  context 'GET new' do
+
+    before(:each) do
+      @new_content = mock('content')
+    end
+
+    it 'assigns @action_url to context node path' do
+      get :new, :node_path => ['foo'], :new_type => 'MockContent'
+      assigns[:action_url].should == @node.path
+    end
+
+    it 'renders template site_page_edit' do
+      get :new, :node_path => ['foo'], :new_type => 'MockContent'
+      response.should render_template('shared/site/site_page_edit')
+    end
+
+    context 'parent node exists' do
 
       it 'assigns @content to new content' do
         MockContent.should_receive(:new).
           and_return(@new_content)
-        get :delegate,
-          :node_path => ['foo', 'NEW'],
-          :new_type => 'MockContent'
+        get :new, :node_path => ['foo'], :new_type => 'MockContent'
         assigns[:content].should == @new_content
       end
+    end
+  end
 
-      it 'renders template site_page_edit' do
-        get :delegate,
-          :node_path => ['foo', 'NEW'],
-          :new_type => 'MockContent'
-        response.should render_template('shared/site/site_page_edit')
-      end
+  context 'GET edit' do
+
+    before(:each) do
+      get :edit, :node_path => ['foo']
     end
 
-    context 'EDIT action' do
+    it 'assigns @content to node content' do
+      assigns[:content].should == @content
+    end
 
-      before(:each) do
-        get :delegate, :node_path => ['foo', 'EDIT']
-      end
-
-      it 'assigns @content to node content' do
-        assigns[:content].should == @content
-      end
-
-      it 'renders template site_page_edit' do
-        response.should render_template('shared/site/site_page_edit')
-      end
+    it 'renders template site_page_edit' do
+      response.should render_template('shared/site/site_page_edit')
     end
   end
 

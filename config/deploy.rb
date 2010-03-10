@@ -1,11 +1,11 @@
 set :application, "Sapling"
-set :repository,  "git@github.com:ericcf/Sapling.git"
+set :repository,  "git@github.com:ericcf/sapling.git"
 
 set :scm, :git
 
-role :web, "10.101.8.76"                          # Your HTTP server, Apache/etc
-role :app, "10.101.8.76"                          # This may be the same as your `Web` server
-role :db,  "10.101.8.76", :primary => true        # This is where Rails migrations will run
+role :web, ""                          # Your HTTP server, Apache/etc
+role :app, ""                          # This may be the same as your `Web` server
+role :db,  "", :primary => true        # This is where Rails migrations will run
 
 ssh_options[:forward_agent] = true
 

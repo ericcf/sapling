@@ -50,7 +50,7 @@ module ContentHelper
     items = []
     if @content
       if action_permitted?('update')
-        items << link_to('Edit This', "#{@action_url}/EDIT", :class => 'action')
+        items << link_to('Edit This', File.join('/@edit', "#{@action_url}"), :class => 'action')
       end
       if action_permitted?('destroy')
         items << link_to('Delete This', @action_url, { :confirm => 'Are you sure you want to delete all the items contained here?', :method => :delete, :class => 'destructive' })

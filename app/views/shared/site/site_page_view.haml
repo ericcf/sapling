@@ -15,7 +15,7 @@
 
 = draw 'personal'
 
-- cache(:action => 'delegate', :action_suffix => 'show') do
+- cache(:controller => 'nodes', :action => 'show') do
   = draw 'main_menu'
 
   = draw 'sidebar'

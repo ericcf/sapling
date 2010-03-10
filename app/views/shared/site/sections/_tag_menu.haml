@@ -13,7 +13,7 @@
             jQuery.ajax({ url: '#{url_for(:controller => :tags, :action => :destroy_association)}', data: {'tag_association[tag_id]': checkbox.val(), 'tag_association[content_id]': #{@content.id}, 'tag_association[content_type]': '#{@content.class}'}, type: 'POST' });
         });
       });
-    - cache(:action => 'delegate', :action_suffix => 'tag_menu_form') do
+    - cache(:action => 'show', :part => 'tag_menu_form') do
       - content_tags = @content.tags
       - form_tag do
         %ul.horizontal_menu

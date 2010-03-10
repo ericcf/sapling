@@ -3,15 +3,12 @@ class NodesController < ApplicationController
   include Authorization::Controller
   include SaplingUser
 
-  attr_reader :context_action
-
   before_filter :get_context_node
-  before_filter :get_context_action
 
   before_filter do |controller|
     unless controller.context_content.nil?
       controller.check_authorization(controller.current_user,
-        controller.context_action,
+        controller.action_name,
         controller.context_content.workflow_state.name)
     end
   end
@@ -25,16 +22,6 @@ class NodesController < ApplicationController
 
   def context_content
     @context_node.content
-  end
-
-  def delegate
-    if @context_node
-      @target_content = @context_node.content unless @context_node.new_record?
-      @action_url = @context_node.path
-      self.send(context_action)
-    else
-      render :action => 'welcome'
-    end
   end
 
   def welcome
@@ -64,17 +51,17 @@ class NodesController < ApplicationController
     child_node, @content = @context_node.create_child_content(params)
 
     if @content and @content.valid?
+      expire_fragment(:action => 'show')
       flash.now[:notice] = "#{@content.class} was successfully created."
       redirect_to child_node.path
     else
       flash.now[:error] = "Error creating #{params[:new_type]}: please fix problems indicated below."
-      @action_url = @context_node.path
       render :template => 'shared/site/site_page_edit', :locals => { :f_method => :post }
     end
   end
 
   def edit
-    @content = @target_content
+    @content = @context_node.content unless @context_node.new_record?
     render :template => 'shared/site/site_page_edit', :locals => { :f_method => :put }
   end
 
@@ -83,12 +70,11 @@ class NodesController < ApplicationController
     content_param = @content.class.to_s.underscore.to_sym
 
     if @content.update_attributes(params[content_param])
-      expire_fragment(:action => 'delegate', :action_suffix => 'show')
+      expire_fragment(:action => 'show')
       flash.now[:notice] = "#{@content.class} was successfully updated."
       redirect_to @context_node.path
     else
       flash.now[:error] = "Error updating #{@content.class}: please fix problems indicated below."
-      @action_url = @context_node.path
       render :template => 'shared/site/site_page_edit', :locals => { :f_method => :put }
     end
   end
@@ -98,7 +84,7 @@ class NodesController < ApplicationController
     classname = content.class.to_s
     parent_content = content.parent
     @context_node.destroy
-    expire_fragment(:action => 'delegate', :action_suffix => 'show')
+    expire_fragment(:action => 'show')
     flash.now[:notice] = "Successfully deleted #{classname}."
 
     if parent_content
@@ -112,23 +98,11 @@ class NodesController < ApplicationController
 
   # parse the node_path param and return the node it references
   def get_context_node
-    path = params[:node_path] || []
-    context_path = "/#{path.join('/')}".gsub(/\/NEW$|\/EDIT$/, '')
-    context_path = '/' if  context_path == ''
+    context_path = '/' + (params[:node_path] || []).join('/')
     @context_node = Node.find_by_path(context_path)
     if @context_node.nil? and context_path == '/'
       @context_node = Node.new(:path => context_path)
     end
-  end
-
-  def get_context_action
-    if action_name == 'delegate'
-      path = params[:node_path] || []
-      @context_action = ['NEW', 'EDIT'].include?(path.last) ? path.last.downcase : 'show'
-    elsif action_name == 'welcome'
-      @context_action = 'show'
-    else
-      @context_action = action_name
-    end
+    @action_url = @context_node.path
   end
 end

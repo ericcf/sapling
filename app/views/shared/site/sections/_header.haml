@@ -7,4 +7,5 @@
   - @javascripts ||= @javascripts
   - for javascript in @javascripts.uniq
     = javascript_include_tag javascript
+  = init_tinymce_hammer_if_required
   = auto_discovery_link_tag :rss, '/@news_feed.xml'

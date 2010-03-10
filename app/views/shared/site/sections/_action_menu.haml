@@ -9,7 +9,7 @@
         %ul
           - for type in content_types do
             %li<
-              = link_to type, "#{@action_url}/NEW?new_type=#{type}", :class => 'action'
+              = link_to type, File.join('/@new', "#{@action_url}?new_type=#{type}"), :class => 'action'
     - for item in action_items
       %li<
         = item
