@@ -4,6 +4,7 @@ class NodesController < ApplicationController
   include SaplingUser
 
   before_filter :get_context_node
+  before_filter :apply_workflow_triggers
 
   before_filter do |controller|
     unless controller.context_content.nil?
@@ -25,20 +26,18 @@ class NodesController < ApplicationController
   end
 
   def welcome
-    node = Node.find_by_path('/')
-    if node
-      @target_content = node.content
-      show
-    else
-      @content_partial = 'shared/site/welcome'
-      render :template => 'shared/site/site_page_view'
-    end
+    @content_partial = 'shared/site/welcome'
+    render :template => 'shared/site/site_page_view'
   end
 
   def show
-    @content = @target_content
-    @content_partial = 'shared/content/view'
-    render :template => 'shared/site/site_page_view'
+    if @context_node.new_record?
+      welcome
+    else
+      @content = @context_node.content
+      @content_partial = 'shared/content/view'
+      render :template => 'shared/site/site_page_view'
+    end
   end
 
   def new
@@ -104,5 +103,12 @@ class NodesController < ApplicationController
       @context_node = Node.new(:path => context_path)
     end
     @action_url = @context_node.path
+  end
+
+  # this will blow up unless config.cache_classes = true for the current environment
+  def apply_workflow_triggers
+    if @context_node.content
+      @context_node.content.apply_workflow_triggers!
+    end
   end
 end

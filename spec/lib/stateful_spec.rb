@@ -12,11 +12,4 @@ describe Stateful do
       include Stateful
     end
   end
-
-  it 'has a workflow_state accessor' do
-    sf = StatefulFoo.new
-    state = mock_model(WorkflowState)
-    sf.workflow_state = state
-    sf.workflow_state.should == state
-  end
 end

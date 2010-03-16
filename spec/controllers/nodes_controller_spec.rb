@@ -5,7 +5,7 @@ describe NodesController do
 
   before(:each) do
     state = mock('workflow_state', :name => 'foo')
-    @content = mock('content', :workflow_state => state)
+    @content = mock('content', :workflow_state => state, :apply_workflow_triggers! => nil)
     @node = mock_model(Node,
       :path => '/foo',
       :content => @content).as_null_object
@@ -36,6 +36,19 @@ describe NodesController do
     end
   end
 
+  context 'all actions' do
+
+    ['get :show', 'get :new', 'get :edit', 'post :create', 'put :update', 'delete :destroy'].each do |action|
+      it "#{action} should call apply_workflow_triggers! on the context content" do
+        @content.stub!(:destroy)
+        @content.stub!(:parent)
+        @content.stub!(:update_attributes)
+        @content.should_receive(:apply_workflow_triggers!)
+        eval(action + ", :node_path => ['foo'], :new_type => 'MockContent'")
+      end
+    end
+  end
+
   context 'GET root' do
 
     context 'when root item exists' do
@@ -45,7 +58,7 @@ describe NodesController do
         Node.stub!(:find_by_path).with('/').and_return(root_node)
         root_content = @content
         root_node.stub!(:content).and_return(root_content)
-        get :welcome
+        get :show, :node_path => []
         assigns[:content_partial].should == 'shared/content/view'
       end
     end
@@ -54,7 +67,7 @@ describe NodesController do
 
       it 'should assign @content_partial to _welcome' do
         Node.stub!(:find_by_path).with('/').and_return(nil)
-        get :welcome
+        get :show, :node_path => []
         assigns[:content_partial].should == 'shared/site/welcome'
       end
     end
@@ -70,6 +83,12 @@ describe NodesController do
     it 'searches for the node matching the path' do
       Node.should_receive(:find_by_path).with('/foo/bar').and_return(@node)
       get :show, :node_path => ['foo', 'bar']
+    end
+
+    it 'assigns @content to the node content' do
+      Node.stub!(:find_by_path).with('/foo/bar').and_return(@node)
+      get :show, :node_path => ['foo', 'bar']
+      assigns[:content].should == @content
     end
 
     it 'assigns @content_partial to shared/content/view' do

@@ -233,13 +233,13 @@ ActiveRecord::Schema.define(:version => 20100301214433) do
   create_table "workflow_triggers", :force => true do |t|
     t.string   "type"
     t.integer  "content_workflow_state_id"
-    t.integer  "workflow_transition_id"
+    t.integer  "target_state_id"
     t.datetime "activate_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "workflow_triggers", ["content_workflow_state_id"], :name => "index_workflow_triggers_on_content_workflow_state_id"
-  add_index "workflow_triggers", ["workflow_transition_id"], :name => "index_workflow_triggers_on_workflow_transition_id"
+  add_index "workflow_triggers", ["target_state_id"], :name => "index_workflow_triggers_on_target_state_id"
 
 end

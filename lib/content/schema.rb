@@ -4,7 +4,7 @@ module Content
 
   class Schema
 
-		attr_reader :fields
+    attr_reader :fields
 
     def initialize(content_classname, fields=[])
       @content_classname = content_classname
@@ -21,12 +21,12 @@ module Content
 
     def add_field(name, type, options)
       attributes = {
-        :name => name,
-        :object_name => @content_classname.underscore
+              :name => name,
+              :object_name => @content_classname.underscore
       }.merge(options)
-			field_class = eval(Content::Fields::Field.types[type])
+      field_class = eval(Content::Fields::Field.types[type])
       @fields << field_class.new(
-        attributes
+              attributes
       )
     end
   end

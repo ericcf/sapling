@@ -28,15 +28,15 @@ describe WorkflowState do
     WorkflowState.new(:name => 'Foo').should_not be_valid
   end
 
-  context 'is destroyed' do
-
-    it 'destroys its transitions' do
-      state = WorkflowState.create!(:name => 'Foo')
-      transition = mock_model(WorkflowTransition, :before_state => state,
-        :after_state => state)
-      WorkflowTransition.stub!(:find).with(:all, anything).and_return([transition])
-      transition.should_receive(:destroy).twice
-      state.destroy
-    end
-  end
+#  context 'is destroyed' do
+#
+#    it 'destroys its transitions' do
+#      state = WorkflowState.create!(:name => 'Foo')
+#      transition = mock_model(WorkflowTransition, :before_state => state,
+#        :after_state => state)
+#      WorkflowTransition.stub!(:find).with(:all, anything).and_return([transition])
+#      transition.should_receive(:destroy).twice
+#      state.destroy
+#    end
+#  end
 end

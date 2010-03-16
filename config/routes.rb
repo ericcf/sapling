@@ -67,7 +67,6 @@ ActionController::Routing::Routes.draw do |map|
 
   # nodes
   map.connect '/@node_list', :controller => 'nodes', :action => 'node_list'
-  map.root :controller => 'nodes', :action => 'welcome', :conditions => { :method => :get }
   map.connect '@new/*node_path',
     :conditions => { :method => :get },
     :controller => 'nodes',
@@ -80,6 +79,7 @@ ActionController::Routing::Routes.draw do |map|
     :conditions => { :method => :get },
     :controller => 'nodes',
     :action => 'show'
+  map.root :controller => 'nodes', :action => 'show', :conditions => { :method => :get }
   map.connect '*node_path',
     :conditions => { :method => :post },
     :controller => 'nodes',

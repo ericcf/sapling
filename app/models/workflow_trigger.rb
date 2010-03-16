@@ -1,17 +1,21 @@
 class WorkflowTrigger < ActiveRecord::Base
 
   belongs_to :content_workflow_state
-  belongs_to :workflow_transition
+  belongs_to :target_state, :class_name => 'WorkflowState'
 
   validates_presence_of :content_workflow_state
   validates_associated :content_workflow_state
-  validates_presence_of :workflow_transition
-  validates_associated :workflow_transition
+  validates_presence_of :target_state
+  validates_associated :target_state
 
   def transition_content
-    target_state = workflow_transition.after_state
     unless content_workflow_state.workflow_state == target_state
       content_workflow_state.update_attributes(:workflow_state => target_state)
     end
+    destroy
+  end
+
+  def activate_if_ready!
+    raise "define in subclass"
   end
 end
