@@ -9,6 +9,22 @@ describe Admin::UsersController do
     @controller.stub!(:check_authorization).and_return(true)
   end
 
+  context 'GET index' do
+
+    it 'assigns @users to all users' do
+      User.stub!(:all).and_return([@user])
+      get :index
+      assigns[:users].should == [@user]
+    end
+
+    it 'renders site_page_view template' do
+      @controller.should_receive(:render).
+        with(:template => 'admin/site_page_view',
+             :locals => { :partial => 'admin/users/index' })
+      get :index
+    end
+  end
+
   context 'GET show' do
 
     it 'assigns @user to user' do

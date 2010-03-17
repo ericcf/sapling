@@ -1,8 +1,6 @@
-require 'content/base'
-
 class Marquee < ActiveRecord::Base
 
-  include Content::Base
+  acts_like_content
 
   has_many :slides, :dependent => :destroy
 

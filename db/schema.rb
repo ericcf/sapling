@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100301214433) do
+ActiveRecord::Schema.define(:version => 20100316210929) do
 
   create_table "addresses", :force => true do |t|
     t.string   "street"
@@ -35,6 +35,18 @@ ActiveRecord::Schema.define(:version => 20100301214433) do
     t.string "classname"
     t.text   "object"
   end
+
+  create_table "content_actions", :force => true do |t|
+    t.string   "content_type"
+    t.integer  "content_id"
+    t.integer  "user_id"
+    t.string   "action"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "content_actions", ["content_type", "content_id"], :name => "index_content_actions_on_content_type_and_content_id"
+  add_index "content_actions", ["user_id"], :name => "index_content_actions_on_user_id"
 
   create_table "content_workflow_states", :force => true do |t|
     t.string   "content_type"

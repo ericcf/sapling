@@ -5,8 +5,8 @@ describe ContentHelper do
 
   describe '#content_types' do
 
-    it 'returns TreeNodeContent types' do
-      helper.content_types.should == TreeNodeContent::Item.types
+    it 'returns Content types' do
+      helper.content_types.should == Content.types
     end
   end
 
@@ -34,7 +34,6 @@ describe ContentHelper do
   describe '#menu_items' do
 
     it 'returns [] when no root node exists' do
-      TreeNodeContent::Item.stub!(:find_by_path).with('/').and_return(nil)
       helper.menu_items.should == []
     end
   end

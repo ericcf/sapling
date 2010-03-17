@@ -1,16 +1,19 @@
 $:.unshift File.join(File.dirname(__FILE__), '..')
-require 'spec_helper.rb'
+require 'spec_helper'
+require 'mock_model'
 
 describe NodesController do
 
   before(:each) do
     state = mock('workflow_state', :name => 'foo')
-    @content = mock('content', :workflow_state => state, :apply_workflow_triggers! => nil)
+    @content = mock_model(MockModel,
+                          :valid? => nil,
+                          :workflow_state => state,
+                          :apply_workflow_triggers! => nil)
     @node = mock_model(Node,
       :path => '/foo',
       :content => @content).as_null_object
-    class MockContent; end
-    MockContent.stub!(:new)
+    MockModel.stub!(:new)
     Node.stub!(:find_by_path).with('/foo').and_return(@node)
     @controller.stub!(:check_authorization).and_return(true)
   end
@@ -44,8 +47,22 @@ describe NodesController do
         @content.stub!(:parent)
         @content.stub!(:update_attributes)
         @content.should_receive(:apply_workflow_triggers!)
-        eval(action + ", :node_path => ['foo'], :new_type => 'MockContent'")
+        eval(action + ", :node_path => ['foo'], :new_type => 'MockModel'")
       end
+    end
+  end
+
+  context 'GET node_list' do
+
+    it 'assigns @node_list to paginated Node results' do
+      get :node_list
+      assigns[:node_list].should == Node.paginate(:page => nil)
+    end
+
+    it 'renders the reference_selection_form' do
+      @controller.should_receive(:render).
+        with(:partial => 'shared/forms/reference_selection_form')
+      get :node_list
     end
   end
 
@@ -104,21 +121,21 @@ describe NodesController do
     end
 
     it 'assigns @action_url to context node path' do
-      get :new, :node_path => ['foo'], :new_type => 'MockContent'
+      get :new, :node_path => ['foo'], :new_type => 'MockModel'
       assigns[:action_url].should == @node.path
     end
 
     it 'renders template site_page_edit' do
-      get :new, :node_path => ['foo'], :new_type => 'MockContent'
+      get :new, :node_path => ['foo'], :new_type => 'MockModel'
       response.should render_template('shared/site/site_page_edit')
     end
 
     context 'parent node exists' do
 
       it 'assigns @content to new content' do
-        MockContent.should_receive(:new).
+        MockModel.should_receive(:new).
           and_return(@new_content)
-        get :new, :node_path => ['foo'], :new_type => 'MockContent'
+        get :new, :node_path => ['foo'], :new_type => 'MockModel'
         assigns[:content].should == @new_content
       end
     end
@@ -142,7 +159,7 @@ describe NodesController do
   context 'POST create' do
 
     before(:each) do
-      @new_content = mock('content', :valid? => nil)
+      @new_content = mock_model(MockModel, :valid? => nil)
       @new_node = mock_model(Node, :path => '/foo/bar')
       @node.stub!(:create_child_content).and_return([@new_node, @new_content])
     end
@@ -150,7 +167,7 @@ describe NodesController do
     it 'assigns @content to new content' do
       post :create,
         :node_path => ['foo'],
-        :new_type => 'MockContent',
+        :new_type => 'MockModel',
         :new_thing => {}
       assigns[:content].should == @new_content
     end
@@ -159,23 +176,28 @@ describe NodesController do
 
       before(:each) do
         @new_content.stub!(:valid?).and_return(true)
+        @create_params = { :node_path => ['foo'],
+          :new_type => 'MockModel',
+          :new_thing => {} }
       end
 
       it 'redirects to the path for the new content' do
-        post :create,
-          :node_path => ['foo'],
-          :new_type => 'MockContent',
-          :new_thing => {}
+        post :create, @create_params
         response.should redirect_to(@new_node.path)
       end
 
       it 'sets a flash.now[:notice] message' do
         @controller.instance_eval{flash.stub!(:sweep)}
-        post :create,
-          :node_path => ['foo'],
-          :new_type => 'MockContent',
-          :new_thing => {}
+        post :create, @create_params
         flash.now[:notice].should == "#{@new_content.class} was successfully created."
+      end
+
+      it 'creates a new ContentAction record' do
+        ContentAction.should_receive(:create).
+          with(:content => @new_content,
+               :user_id => controller.current_user_id,
+               :action => 'created')
+        post :create, @create_params
       end
 
       context 'context is root' do
@@ -185,10 +207,7 @@ describe NodesController do
           Node.stub!(:new).and_return(@node)
           root_node = mock_model(Node, :path => '/')
           @node.stub!(:create_child_content).and_return([root_node, @new_content])
-          post :create,
-            :node_path => [],
-            :new_type => 'MockContent',
-            :new_thing => {}
+          post :create, @create_params
           response.should redirect_to('/')
         end
       end
@@ -253,6 +272,15 @@ describe NodesController do
         put :update,
           :node_path => ['foo']
         flash.now[:notice].should == "#{@content.class} was successfully updated."
+      end
+
+      it 'creates a new ContentAction record' do
+        ContentAction.should_receive(:create).
+          with(:content => @content,
+               :user_id => controller.current_user_id,
+               :action => 'modified')
+        put :update,
+          :node_path => ['foo']
       end
     end
 

@@ -5,14 +5,33 @@ describe Admin::SectionsController do
 
   before(:each) do
     @section = mock_model(Section)
-    Section.stub!(:find).with('1').and_return(@section)
-    controller.stub!(:check_authorization).and_return(true)
+    Section.stub!(:find).with(@section.id.to_s).and_return(@section)
+    @controller.stub!(:check_authorization).and_return(true)
+  end
+
+  context 'GET index' do
+
+    before(:each) do
+      Section.stub!(:all).and_return([@section])
+    end
+
+    it 'assigns @sections to all sections' do
+      get :index
+      assigns[:sections].should == [@section]
+    end
+
+    it 'renders site_page_view template' do
+      @controller.should_receive(:render).
+        with(:template => 'admin/site_page_view',
+             :locals => { :partial => 'admin/sections/index' })
+      get :index
+    end
   end
 
   context 'GET show' do
 
     it 'assigns @section to section' do
-      get :show, :id => 1
+      get :show, :id => @section.id
       assigns[:section].should == @section
     end
 
@@ -20,7 +39,7 @@ describe Admin::SectionsController do
       @controller.should_receive(:render).
         with(:template => 'admin/site_page_view',
              :locals => { :partial => 'admin/sections/show' })
-      get :show, :id => 1
+      get :show, :id => @section.id
     end
   end
 
@@ -33,7 +52,7 @@ describe Admin::SectionsController do
     end
 
     it 'renders site_page_edit template' do
-      controller.should_receive(:render).
+      @controller.should_receive(:render).
         with(:template => 'admin/site_page_edit',
              :locals => { :partial => 'admin/sections/new' })
       get :new
@@ -70,7 +89,7 @@ describe Admin::SectionsController do
 
       it 'renders site_page_edit template' do
         @section.stub!(:save).and_return(false)
-        controller.should_receive(:render).
+        @controller.should_receive(:render).
           with(:template => 'admin/site_page_edit',
                :locals => { :partial => 'admin/sections/new' })
         post :create, :section => {}
@@ -81,15 +100,15 @@ describe Admin::SectionsController do
   context 'GET edit' do
 
     it 'assigns @section to section' do
-      get :edit, :id => 1
+      get :edit, :id => @section.id
       assigns[:section].should == @section
     end
 
     it 'renders site_page_edit template' do
-      controller.should_receive(:render).
+      @controller.should_receive(:render).
         with(:template => 'admin/site_page_edit',
              :locals => { :partial => 'admin/sections/edit' })
-      get :edit, :id => 1
+      get :edit, :id => @section.id
     end
   end
 
@@ -100,20 +119,20 @@ describe Admin::SectionsController do
     end
 
     it 'assigns @section to section' do
-      put :update, :id => 1, :section => {}
+      put :update, :id => @section.id, :section => {}
       assigns[:section].should == @section
     end
 
     it 'updates the section attributes' do
       @section.should_receive(:update_attributes).with('foo' => 'bar')
-      put :update, :id => 1, :section => { :foo => 'bar' }
+      put :update, :id => @section.id, :section => { :foo => 'bar' }
     end
 
     context 'is successful' do
 
       it 'redirects to the updated section' do
         @section.stub!(:update_attributes).and_return(true)
-        put :update, :id => 1, :section => {}
+        put :update, :id => @section.id, :section => {}
         response.should redirect_to(admin_section_path(@section))
       end
     end
@@ -122,10 +141,10 @@ describe Admin::SectionsController do
 
       it 'renders site_page_edit template' do
         @section.stub!(:update_attributes).and_return(false)
-        controller.should_receive(:render).
+        @controller.should_receive(:render).
           with(:template => 'admin/site_page_edit',
                :locals => { :partial => 'admin/sections/edit' })
-        put :update, :id => 1, :section => {}
+        put :update, :id => @section.id, :section => {}
       end
     end
   end
@@ -137,20 +156,20 @@ describe Admin::SectionsController do
     end
 
     it 'assigns @section to section' do
-      delete :destroy, :id => 1
+      delete :destroy, :id => @section.id
       assigns[:section].should == @section
     end
 
     it 'destroys the section' do
       @section.should_receive(:destroy)
-      delete :destroy, :id => 1
+      delete :destroy, :id => @section.id
     end
 
     context 'is successful' do
 
       it 'redirects to the section' do
         @section.stub!(:destroy).and_return(true)
-        delete :destroy, :id => 1
+        delete :destroy, :id => @section.id
         response.should redirect_to(admin_sections_path)
       end
     end
@@ -159,10 +178,10 @@ describe Admin::SectionsController do
 
       it 'renders site_page_view template' do
         @section.stub!(:update_attributes).and_return(false)
-        controller.should_receive(:render).
+        @controller.should_receive(:render).
           with(:template => 'admin/site_page_view',
                :locals => { :partial => 'admin/sections/show' })
-        delete :destroy, :id => 1
+        delete :destroy, :id => @section.id
       end
     end
   end

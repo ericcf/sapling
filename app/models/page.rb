@@ -1,8 +1,6 @@
-require 'content/base'
-
 class Page < ActiveRecord::Base
 
-  include Content::Base
+  acts_like_content
 
   define_schema do |s|
     s.string :title, :label => 'Title', :required => true, :display => 'header'

@@ -1,7 +1,7 @@
 require 'spec_helper.rb'
 require 'mock_model'
 
-describe Stateful do
+describe Content::Stateful do
 
   before(:each) do
     class StatefulFoo < MockModel
@@ -9,7 +9,7 @@ describe Stateful do
       def initialize
         set_workflow_state
       end
-      include Stateful
+      include Content::Stateful
     end
   end
 end

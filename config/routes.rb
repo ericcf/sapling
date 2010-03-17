@@ -65,6 +65,9 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'shared_emails',
     :action => 'create'
 
+  # testing
+  map.connect '/@testing', :controller => 'testing', :action => 'test'
+
   # nodes
   map.connect '/@node_list', :controller => 'nodes', :action => 'node_list'
   map.connect '@new/*node_path',

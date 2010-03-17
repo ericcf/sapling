@@ -51,6 +51,9 @@ class NodesController < ApplicationController
 
     if @content and @content.valid?
       expire_fragment(:action => 'show')
+      ContentAction.create(:content => @content,
+                           :user_id => current_user_id,
+                           :action => 'created')
       flash.now[:notice] = "#{@content.class} was successfully created."
       redirect_to child_node.path
     else
@@ -70,6 +73,9 @@ class NodesController < ApplicationController
 
     if @content.update_attributes(params[content_param])
       expire_fragment(:action => 'show')
+      ContentAction.create(:content => @content,
+                           :user_id => current_user_id,
+                           :action => 'modified')
       flash.now[:notice] = "#{@content.class} was successfully updated."
       redirect_to @context_node.path
     else

@@ -1,13 +1,13 @@
 require 'spec_helper.rb'
 
-describe TreeNodeContent do
+describe Content::TreeNodeContent do
 
   before(:each) do
     class MockContent; end
     MockContent.stub!(:has_one)
     MockContent.stub!(:validates_presence_of)
     class MockContent
-      include TreeNodeContent
+      include Content::TreeNodeContent
     end
   end
 
@@ -15,7 +15,7 @@ describe TreeNodeContent do
     MockContent.should_receive(:validates_presence_of).
       with(:title, :message => 'must be provided')
     class MockContent
-      include TreeNodeContent
+      include Content::TreeNodeContent
     end
   end
 
@@ -50,35 +50,6 @@ describe TreeNodeContent do
       content = MockContent.new
       content.stub!(:node).and_return(node)
       content.path.should == node.path
-    end
-  end
-
-  describe TreeNodeContent::Item do
-
-    describe '##types' do
-
-      it 'returns names of classes which include TreeNodeContent' do
-        TreeNodeContent::Item.types.clear
-        class MockContent
-          include TreeNodeContent
-        end
-        TreeNodeContent::Item.types.should == ['MockContent']
-      end
-    end
-
-    describe '##find_by_path(:path)' do
-
-      it 'returns nil if no Node exists at :path' do
-        Node.stub!(:find_by_path)
-        TreeNodeContent::Item.find_by_path('/foo').should be_nil
-      end
-
-      it 'returns the content at :path if a Node exists there' do
-        content = double('content')
-        node = mock_model(Node, :content => content)
-        Node.stub!(:find_by_path).with('/foo').and_return(node)
-        TreeNodeContent::Item.find_by_path('/foo').should == content
-      end
     end
   end
 end

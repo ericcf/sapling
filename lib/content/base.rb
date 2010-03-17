@@ -1,6 +1,6 @@
-require 'tree_node_content'
-require 'stateful'
-require 'taggable'
+#require 'tree_node_content'
+#require 'stateful'
+#require 'taggable'
 require 'content/view'
 
 module Content
@@ -10,9 +10,9 @@ module Content
     def self.included(base)
       base.extend(ClassMethods)
       base.class_eval do
-        include TreeNodeContent
-        include Stateful
-        include Taggable
+        #include TreeNodeContent
+        #include Stateful
+        #include Taggable
         include View
         class << self; attr_reader :schema end
         @schema = Schema.new(self.class.to_s)

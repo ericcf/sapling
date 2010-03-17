@@ -99,7 +99,7 @@ describe SharedEmailsController do
       end
 
       it 'sets flash error' do
-        controller.instance_eval{flash.stub!(:sweep)}
+        @controller.instance_eval{flash.stub!(:sweep)}
         post :create, @params
         flash.now[:error].should == 'Error emailing content.'
       end

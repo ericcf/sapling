@@ -1,8 +1,6 @@
-require 'content/base'
-
 class NewsItem < ActiveRecord::Base
 
-  include Content::Base
+  acts_like_content
 
   has_attached_file :image,
     :styles => { :thumb => ["128x128>", :jpg], :mini => ["64x64>", :jpg] }

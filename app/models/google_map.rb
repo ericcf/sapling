@@ -1,8 +1,6 @@
-require 'content/base'
-
 class GoogleMap < ActiveRecord::Base
 
-  include Content::Base
+  acts_like_content
 
   has_many :map_pins
   has_many :addresses, :through => :map_pins

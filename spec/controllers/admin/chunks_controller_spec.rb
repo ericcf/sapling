@@ -24,7 +24,7 @@ describe Admin::ChunksController do
     end
 
     it 'renders site_page_view template' do
-      controller.should_receive(:render).
+      @controller.should_receive(:render).
         with(:template => 'admin/site_page_view',
              :locals => { :partial => 'admin/chunks/show' })
       get :show, :section_id => @section.id, :id => @chunk.id
@@ -45,7 +45,7 @@ describe Admin::ChunksController do
     end
 
     it 'renders site_page_edit template' do
-      controller.should_receive(:render).
+      @controller.should_receive(:render).
         with(:template => 'admin/site_page_edit',
              :locals => { :partial => 'admin/chunks/new' })
       get :new, :section_id => @section.id
@@ -89,7 +89,7 @@ describe Admin::ChunksController do
         chunks = double('chunks')
         chunks.stub!(:<<).with(anything).and_return(false)
         @section.stub!(:chunks).and_return(chunks)
-        controller.should_receive(:render).
+        @controller.should_receive(:render).
           with(:template => 'admin/site_page_edit',
                :locals => { :partial => 'admin/chunks/new' })
         post :create, :section_id => @section.id, :chunk => {}
@@ -110,7 +110,7 @@ describe Admin::ChunksController do
     end
 
     it 'renders site_page_edit template' do
-      controller.should_receive(:render).
+      @controller.should_receive(:render).
         with(:template => 'admin/site_page_edit',
              :locals => { :partial => 'admin/chunks/edit' })
       get :edit, :section_id => @section.id, :id => @chunk.id
@@ -146,7 +146,7 @@ describe Admin::ChunksController do
 
       it 'renders site_page_edit template' do
         @chunk.stub!(:update_attributes).and_return(false)
-        controller.should_receive(:render).
+        @controller.should_receive(:render).
           with(:template => 'admin/site_page_edit',
                :locals => { :partial => 'admin/chunks/edit' })
         put :update, :section_id => @section.id, :id => @chunk.id, :chunk => {}
@@ -183,7 +183,7 @@ describe Admin::ChunksController do
 
       it 'renders site_page_view template' do
         @chunk.stub!(:update_attributes).and_return(false)
-        controller.should_receive(:render).
+        @controller.should_receive(:render).
           with(:template => 'admin/site_page_view',
                :locals => { :partial => 'admin/chunks/show' })
         delete :destroy, :section_id => @section.id, :id => @chunk.id

@@ -1,8 +1,6 @@
-require 'content/base'
-
 class Slide < ActiveRecord::Base
 
-  include Content::Base
+  acts_like_content
 
   belongs_to :marquee
   belongs_to :target, :polymorphic => true

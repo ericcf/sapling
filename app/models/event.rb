@@ -1,9 +1,6 @@
-require 'content/base'
-
 class Event < ActiveRecord::Base
 
-  include Content::Base
-
+  acts_like_content
   has_event_calendar
 
   validates_presence_of :start_at

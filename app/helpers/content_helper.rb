@@ -3,7 +3,7 @@ module ContentHelper
   include SaplingUser
 
   def content_types
-    TreeNodeContent::Item.types
+    Content.types
   end
 
   def title
@@ -12,8 +12,9 @@ module ContentHelper
 
   def menu_items
     items = []
-    root_content = TreeNodeContent::Item.find_by_path('/')
-    if root_content
+    root_node = Node.find_by_path('/')
+    if root_node
+      root_content = root_node.content
       if action_permitted?('show', root_content.workflow_state.name)
         items << root_content
         items += root_content.children.select do |child|
