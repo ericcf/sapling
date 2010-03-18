@@ -33,15 +33,6 @@ class Node < ActiveRecord::Base
     end
   end
 
-#  def self.find_or_new_by_path(node_path)
-#    node = Node.find_by_path(node_path)
-#    if node.nil? and node_path == '/'
-#      return Node.new(:path => '/')
-#    end
-#
-#    node
-#  end
-
   def create_child_content(params)
     node = nil
     child_content = build_content(params)

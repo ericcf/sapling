@@ -1,0 +1,247 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+li {
+  margin-bottom: 0.5em;
+  margin-left: 0.5em; }
+
+ol li {
+  margin-left: 1.5em; }
+
+h2 {
+  margin-bottom: 1em; }
+
+td.title {
+  width: 25em; }
+td.date {
+  width: 10em; }
+
+#admin {
+  width: 100%;
+  height: 1.3em; }
+
+#action_menu {
+  float: left;
+  width: 24em; }
+
+#personal {
+  float: right;
+  width: 25%;
+  text-align: right;
+  margin-right: 1em; }
+
+#logo {
+  width: 383px;
+  height: 75px;
+  float: left;
+  margin-left: 17px; }
+
+#search {
+  float: left;
+  width: 500px;
+  text-align: right; }
+  #search .submit_tag {
+    display: inline;
+    padding: 0; }
+
+#breadcrumbs {
+  float: left;
+  margin-left: 17px;
+  width: 883px; }
+
+#main_menu {
+  float: left;
+  width: 890;
+  margin-left: 10px;
+  margin-top: 10px;
+  height: 35px; }
+  #main_menu ul {
+    line-height: 2em; }
+  #main_menu a {
+    display: block;
+    height: 35px;
+    padding-left: 7px; }
+
+#sidebar {
+  float: right;
+  width: 325px; }
+
+#above_content {
+  clear: both; }
+
+#content {
+  padding: 5px;
+  margin-left: 10px; }
+
+#below_content {
+  margin-left: 17px;
+  width: 876px; }
+
+#flash {
+  margin: 10px;
+  padding: 10px 5px;
+  width: 878px; }
+  #flash.error {
+    width: 876px; }
+
+#footer {
+  float: left;
+  margin-left: 17px;
+  margin-top: 15px;
+  width: 883px; }
+
+body {
+  font-size: 100%;
+  line-height: 1.125em; }
+
+p, li {
+  font-size: 0.875em; }
+
+img {
+  border: none; }
+
+ul {
+  list-style: none; }
+
+h1 {
+  font-size: 1.25em;
+  line-height: 1.5em; }
+
+h2 {
+  font-size: 1.1em; }
+
+h3 {
+  font-size: 0.9em; }
+
+h1, h2, h3 {
+  margin-bottom: 0.5em; }
+
+tr.even {
+  background-color: #efefef; }
+
+#admin {
+  font-size: 0.875em;
+  background-color: #0000AA;
+  border-bottom: 2px solid #3333FF; }
+
+#personal {
+  color: #ffffff; }
+  #personal a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold; }
+
+#search .search_submit {
+  background: url(/images/icons/shiny_button.png) no-repeat;
+  border: none;
+  width: 126px;
+  height: 24px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer; }
+  #search .search_submit:hover {
+    color: #ffffaa; }
+
+#breadcrumbs {
+  text-transform: lowercase; }
+  #breadcrumbs a {
+    text-decoration: none;
+    color: blue; }
+
+#flash.notice {
+  color: green;
+  background-color: #fafad2;
+  border: 1px solid green; }
+#flash.error {
+  color: red;
+  background-color: #ffeeee;
+  border: 2px solid red; }
+
+#main_menu a {
+  text-decoration: none;
+  color: #0000aa;
+  font-size: 1.25em;
+  font-weight: bold; }
+  #main_menu a.selected {
+    color: #0000aa; }
+  #main_menu a:hover, #main_menu a.selected {
+    background-color: #efefff; }
+#main_menu li {
+  float: left;
+  width: 8em;
+  list-style: none; }
+
+#sidebar li {
+  list-style: none; }
+
+h3 {
+  font-size: 0.9em;
+  margin-bottom: 0.5em; }
+
+li {
+  font-size: 0.875em;
+  list-style: none; }
+
+#metadata {
+  width: 250px;
+  margin-left: 10px;
+  margin-top: 10px;
+  float: left; }
+
+#content_form {
+  width: 650px;
+  margin-left: 10px;
+  margin-top: 10px;
+  float: left; }
+
+.panel_section {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border: 1px solid #ccc; }
+  .panel_section h3 {
+    color: #fff;
+    padding: 0.3em;
+    background-color: #999;
+    background-image: url('/images/icons/panel_back.png'); }
+  .panel_section ul, .panel_section div {
+    margin-left: 0.3em; }
+
+form {
+  margin-top: 1em; }
+
+div.field {
+  font-size: 0.875em;
+  margin: 0.5em 0; }
+  div.field label {
+    display: block;
+    width: 150px;
+    text-align: right;
+    font-weight: bold;
+    float: left;
+    margin-right: 10px; }
+  div.field .required {
+    font-size: smaller;
+    color: #ff6666; }
+  div.field .fieldWithErrors {
+    float: left; }
+    div.field .fieldWithErrors input {
+      border-color: red; }
+  div.field .formError {
+    width: 9em;
+    float: left;
+    color: red;
+    font-size: smaller;
+    margin-left: 1em; }
+  div.field .value {
+    float: left; }
+
+div.submit_tag {
+  padding-left: 16em;
+  margin: 1em 0;
+  height: 1.125em; }
+
+div.field, div.submit_tag {
+  clear: both; }
+  div.field input, div.field textarea, div.field select, div.submit_tag input, div.submit_tag textarea, div.submit_tag select {
+    border: 1px solid #999999; }

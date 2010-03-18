@@ -1,6 +1,6 @@
 module WorkflowHelper
 
-  def workflow_state_list
-    WorkflowState.all.map { |state| state.name }
+  def workflow_states
+    WorkflowState.all.map &:name
   end
 end

@@ -5,7 +5,7 @@ describe '/shared/fields/edit/_date_select' do
   before(:each) do
     assigns[:javascripts] = []
     assigns[:stylesheets] = []
-    @content = double('content', :date => Date.parse('2010-02-05'))
+    @content = mock('content', :date => Date.parse('2010-02-05'))
     form = ActionView::Helpers::FormBuilder.new(:content, @content, template, {}, nil)
     @locals = { :label => 'The date',
                 :form => form,

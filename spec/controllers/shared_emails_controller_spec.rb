@@ -4,7 +4,7 @@ require 'spec_helper.rb'
 describe SharedEmailsController do
 
   before(:each) do
-    @content = double('content', :path => '/foo')
+    @content = mock('content', :path => '/foo')
     @shared_email = mock_model(SharedEmail, :content => @content).as_null_object
     SharedEmail.stub!(:new).and_return(@shared_email)
     @params = { :content_type => 'Foo', :content_id => 1 }

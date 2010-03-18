@@ -81,5 +81,14 @@ describe WorkflowTrigger do
       end
     end
   end
+
+  describe '#activate_if_ready!' do
+
+    it 'should raise an error' do
+      lambda {
+        WorkflowTrigger.new.activate_if_ready!
+      }.should raise_error("implement in subclass")
+    end
+  end
 end
 

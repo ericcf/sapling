@@ -9,7 +9,7 @@
         %li
           %div{ :class => current_state }= current_state
           %ul
-            - for state in workflow_state_list
+            - for state in workflow_states
               - unless state == current_state
                 %li
                   = link_to state, { :action => 'update_state', :controller => 'admin/workflow', :content_id => @content.id, :content_type => @content.class.to_s, :workflow_state => state }, { :method => :put, :class => 'action' }

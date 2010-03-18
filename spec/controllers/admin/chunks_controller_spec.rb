@@ -86,7 +86,7 @@ describe Admin::ChunksController do
     context 'is not successful' do
 
       it 'renders site_page_edit template' do
-        chunks = double('chunks')
+        chunks = mock('chunks')
         chunks.stub!(:<<).with(anything).and_return(false)
         @section.stub!(:chunks).and_return(chunks)
         @controller.should_receive(:render).

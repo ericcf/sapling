@@ -1,0 +1,19 @@
+%ul
+  - created = content_creation
+  - if created
+    %li
+      = "#{render_date created[:date]}:"
+      = link_to created[:user].username, admin_user_path(created[:user])
+      created
+
+  - modified = last_content_modification
+  - if modified
+    %li
+      = "#{render_date modified[:date]}:"
+      = link_to modified[:user].username, admin_user_path(modified[:user])
+      modified
+
+  - if @content.workflow_state
+    %li
+      state:
+      = @content.workflow_state.name

@@ -9,4 +9,12 @@ describe Chunk do
       :section => section,
       :text => 'Bar').should be_valid
   end
+
+  describe '#title' do
+
+    it 'returns the name' do
+      chunk = Chunk.new(:name => 'Foo')
+      chunk.title.should == 'Foo'
+    end
+  end
 end

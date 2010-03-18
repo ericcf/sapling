@@ -14,8 +14,8 @@ describe '/shared/fields/edit/_reference_selection_form' do
   end
 
   it 'renders links for selecting content items' do
-    content = double('content', :title => 'Foo')
-    node = double('node', :content => content, :path => '/foo')
+    content = mock('content', :title => 'Foo')
+    node = mock('node', :content => content, :path => '/foo')
     assigns[:node_list] << node
     render
     response.should have_tag('a', :text => 'Foo')

@@ -9,14 +9,14 @@ module Content::TreeNodeContent
   end
 
   def parent
-    node.parent_content
+    node.nil? ? nil : node.parent_content
   end
 
   def children
-    node.child_contents
+    node.nil? ? [] : node.child_contents
   end
 
   def path
-    node.path
+    node.nil? ? nil : node.path
   end
 end

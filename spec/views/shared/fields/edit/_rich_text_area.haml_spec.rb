@@ -5,7 +5,7 @@ describe '/shared/fields/edit/_rich_text_area' do
   before(:each) do
     assigns[:javascripts] = []
     assigns[:stylesheets] = []
-    @content = double('content', :text => 'Foo')
+    @content = mock('content', :text => 'Foo')
     form = ActionView::Helpers::FormBuilder.new(:content, @content, template, {}, nil)
     @locals = { :label => 'The text', :form => form, :field_name => :text }
   end

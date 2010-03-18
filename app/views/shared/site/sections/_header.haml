@@ -1,6 +1,7 @@
 - content_for :head do
   %title= title
-  = stylesheet_link_tag 'screen', :media => 'screen'
+  -#= stylesheet_link_tag 'screen', :media => 'screen'
+  -#= stylesheet_link_tag 'testing'
   - @stylesheets ||= []
   - for stylesheet in @stylesheets.uniq
     = stylesheet_link_tag stylesheet

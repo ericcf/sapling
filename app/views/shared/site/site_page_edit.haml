@@ -1,9 +1,11 @@
 - @javascripts ||= []
-- @stylesheets ||= []
+- @stylesheets ||= ['content_editing']
 
 = draw 'logo'
 
 -#= draw 'search'
+
+= draw 'breadcrumbs'
 
 = draw 'personal'
 
@@ -13,9 +15,22 @@
 
 = draw 'above_content'
 
-%h2= f_method == :post ? "Adding New #{@content.class}" : "Editing #{@content.class}"
+%div#metadata
+  %div.panel_section
+    %h3 Properties
+    = render :partial => 'shared/content/properties_panel'
+  %div.panel_section
+    %h3 Workflow
+  %div.panel_section
+    %h3 Tags
+  %div.panel_section
+    %h3 Versions
 
-= render :partial => 'shared/content/edit', :locals => { :f_method => f_method }
+%div#content_form
+  %div.panel_section
+    %h3= f_method == :post ? "Adding New #{@content.class}" : "Editing #{@content.class}"
+
+    = render :partial => 'shared/content/edit', :locals => { :f_method => f_method }
 
 = draw 'footer'
 

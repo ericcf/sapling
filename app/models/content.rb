@@ -11,6 +11,7 @@ module Content
       include Content::Stateful
       include Content::Taggable
       include Content::TreeNodeContent
+      include Content::Auditable
     end
     Content.types << self.to_s
   end

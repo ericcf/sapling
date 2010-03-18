@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../spec_helper.rb'
 describe '/shared_emails/_new' do
 
   before(:each) do
-    content = double('content', :path => '/')
+    content = mock('content', :path => '/')
     assigns[:content] = content
     assigns[:shared_email] = mock_model(SharedEmail,
       :content => content,

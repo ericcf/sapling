@@ -106,7 +106,7 @@ describe Node do
     it 'returns its parent\'s content when a parent exists' do
       parent_node = mock_model(Node, :id => 2)
       Node.stub!(:find).with(parent_node.id, anything).and_return(parent_node)
-      parent_content = double('content')
+      parent_content = mock('content')
       parent_node.should_receive(:content).and_return(parent_content)
       @node.parent_id = parent_node.id
       @node.parent_content.should == parent_content
@@ -120,28 +120,13 @@ describe Node do
     end
 
     it 'returns a list of contents of child nodes when there are children' do
-      child_content = double('content')
+      child_content = mock('content')
       child_node = mock_model(Node, :content => child_content)
       child_node.should_receive(:content).and_return(child_content)
       @node.stub(:children).and_return([child_node])
       @node.child_contents.should == [child_content]
     end
   end
-
-  # class methods
-
-#  it 'returns a node at a path' do
-#    node = mock_model(Node)
-#    Node.stub!(:find_by_path).and_return(node)
-#    Node.find_or_new_by_path('/foo').should == node
-#  end
-#
-#  it 'find_or_new_by_path(:path) returns a new node if one isn\'t at root' do
-#    node = mock_model(Node)
-#    Node.stub!(:find_by_path).with('/').and_return(nil)
-#    Node.stub!(:new).and_return(node)
-#    Node.find_or_new_by_path('/').should == node
-#  end
 
   # instance methods
 
@@ -178,7 +163,8 @@ describe Node do
           :content_type => 'MockModel')
         @content.stub!(:title).and_return 'Foo'
         Node.should_receive(:create).
-          with(:path => '/foo-1', :parent => root_node, :content => anything)
+          with(:path => '/foo-1', :parent => root_node, :content => anything).
+          and_return(true)
         root_node.create_child_content(
           :new_type => 'MockModel',
           :mock_content => {}
@@ -208,7 +194,7 @@ describe Node do
 
     it 'calls destroy on its children' do
       @content.stub!(:destroy)
-      child_node = double('node')
+      child_node = mock('node')
       @node.stub!(:children).and_return([child_node])
       child_node.should_receive(:destroy)
       @node.destroy

@@ -7,5 +7,8 @@ class ContentAction < ActiveRecord::Base
   validates_associated :content
   validates_presence_of :user
   validates_associated :user
+
+  CREATED = 'created'
+  MODIFIED = 'modified'
   
 end

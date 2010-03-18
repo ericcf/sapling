@@ -16,6 +16,6 @@ class WorkflowTrigger < ActiveRecord::Base
   end
 
   def activate_if_ready!
-    raise "define in subclass"
+    raise "implement in subclass"
   end
 end

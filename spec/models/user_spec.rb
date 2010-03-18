@@ -97,4 +97,11 @@ describe User do
       @user.password_hash.should == old_hash
     end
   end
+
+  describe '#title' do
+
+    it 'returns the username' do
+      User.new(:username => 'Foo').title.should == 'Foo'
+    end
+  end
 end

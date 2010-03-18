@@ -3,9 +3,9 @@ require 'spec_helper.rb'
 describe '/shared/fields/edit/_image_upload' do
 
   before(:each) do
-    @image = double('image')
+    @image = mock('image')
     @image.stub!(:url).with(:thumb).and_return('/images/foo.jpg')
-    content = double('content')
+    content = mock('content')
     assigns[:content] = content
     assigns[:content].stub!(:image).and_return(@image)
     assigns[:content].stub!(:image_file_size)
